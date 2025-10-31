@@ -8,7 +8,7 @@ Shader"Hidden/PortalShader"
     }
     SubShader
     {
-        Tags{ "Queue" = "Geometry " "IgnoreProjector" = "True" "RenderType" = "Opaque" }
+        Tags{ "Queue" = "Geometry" "IgnoreProjector" = "True" "RenderType" = "Opaque" }
         Lighting Off
         Cull Back
         ZWrite On

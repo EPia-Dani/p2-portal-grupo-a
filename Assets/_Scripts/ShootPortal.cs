@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -122,6 +124,36 @@ public class ShootPortal : MonoBehaviour
             Material[] materials = rend.materials;
             materials[0] = doublePortal ? doublePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
+        }
+    }
+
+    private void isValidPosition(GameObject portalPrefab)
+    {
+        Transform points = portalPrefab.transform.Find("ValidPosition");
+        List<Transform> ValidPoints = points.GetComponentsInChildren<Transform>().ToList();
+
+        Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
+        Ray ray = playerCamera.ViewportPointToRay(shootDirection);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject hitObj = hit.collider.gameObject;
+            if (hitObj != null)
+            {
+                if (hitObj.layer == 7)
+                {
+                    Vector3 hitPoint = hit.point + hit.normal * 0.01f;
+                    Quaternion rotacion = Quaternion.LookRotation(hit.normal);
+                    Instantiate(points, hitPoint, rotacion);
+
+                    bool illegalPos = false;
+                    foreach (Transform t in ValidPoints)
+                    {
+                        SphereCollider s = t.GetComponent<SphereCollider>();
+                    }
+                }
+            }
         }
     }
 }
