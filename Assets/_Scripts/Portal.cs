@@ -8,7 +8,7 @@ public class Portal : MonoBehaviour
     public Transform reflectionTransform;
     public Camera reflectionCamera;
     public Portal mirrorPortal;
-    public float offsetNearPlane = 1.4f;
+    public float offsetNearPlane = 1.3f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +21,7 @@ public class Portal : MonoBehaviour
     {
         Vector3 localPosition = reflectionTransform.InverseTransformPoint(playerCamera.transform.position);
         localPosition.z = -localPosition.z;
+        localPosition.x = -localPosition.x;
         mirrorPortal.reflectionCamera.transform.position = mirrorPortal.transform.TransformPoint(localPosition);
 
         Vector3 localDirection = reflectionTransform.InverseTransformDirection(playerCamera.transform.forward);
@@ -30,11 +31,5 @@ public class Portal : MonoBehaviour
 
         float distance = Vector3.Distance(mirrorPortal.reflectionCamera.transform.position, mirrorPortal.transform.position);
         mirrorPortal.reflectionCamera.nearClipPlane = distance + offsetNearPlane;
-
-        /*Plane p = new Plane(-reflectionTransform.forward, reflectionTransform.position);
-        Vector4 clipPlaneWorldSpace = new Vector4(p.normal.x, p.normal.y, p.normal.z, p.distance);
-        Vector4 clipPlaneCameraSpace = Matrix4x4.Transpose(Matrix4x4.Inverse(reflectionCamera.worldToCameraMatrix)) * clipPlaneWorldSpace;
-        var newMatrix = reflectionCamera.CalculateObliqueMatrix(clipPlaneCameraSpace);
-        reflectionCamera.projectionMatrix = newMatrix;*/
     }
 }

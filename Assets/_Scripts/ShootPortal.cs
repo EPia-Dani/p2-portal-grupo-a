@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ public class ShootPortal : MonoBehaviour
     private bool isFiring = false;
 
     public Material singlePortalMaterial;
-    public Material doublePortalMaterial;
+    public Material bluePortalMaterial;
+    public Material orangePortalMaterial;
 
     public GameObject bluePortalPrefab;
     public GameObject orangePortalPrefab;
@@ -114,7 +116,7 @@ public class ShootPortal : MonoBehaviour
         {
             MeshRenderer rend = orangePortalGameObject.GetComponentInChildren<MeshRenderer>();
             Material[] materials = rend.materials;
-            materials[0] = doublePortal ? doublePortalMaterial : singlePortalMaterial;
+            materials[0] = doublePortal ? orangePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
         }
         
@@ -122,13 +124,14 @@ public class ShootPortal : MonoBehaviour
         {
             MeshRenderer rend = bluePortalGameObject.GetComponentInChildren<MeshRenderer>();
             Material[] materials = rend.materials;
-            materials[0] = doublePortal ? doublePortalMaterial : singlePortalMaterial;
+            materials[0] = doublePortal ? bluePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
         }
     }
 
-    private void isValidPosition(GameObject portalPrefab)
+    private bool isValidPosition(GameObject portalPrefab)
     {
+        bool illegalPos = false;
         Transform points = portalPrefab.transform.Find("ValidPosition");
         List<Transform> ValidPoints = points.GetComponentsInChildren<Transform>().ToList();
 
@@ -141,19 +144,35 @@ public class ShootPortal : MonoBehaviour
             GameObject hitObj = hit.collider.gameObject;
             if (hitObj != null)
             {
-                if (hitObj.layer == 7)
+                if (hitObj.layer != 7)
                 {
-                    Vector3 hitPoint = hit.point + hit.normal * 0.01f;
-                    Quaternion rotacion = Quaternion.LookRotation(hit.normal);
-                    Instantiate(points, hitPoint, rotacion);
+                    illegalPos = true;
+                    return illegalPos;
+                }
 
-                    bool illegalPos = false;
-                    foreach (Transform t in ValidPoints)
+                Vector3 hitPoint = hit.point + hit.normal * 0.01f;
+                Quaternion rotacion = Quaternion.LookRotation(hit.normal);
+                Instantiate(points, hitPoint, rotacion);
+
+                //TODO: refactorizar
+                foreach (Transform t in ValidPoints)
+                {
+                    Ray ray2 = playerCamera.ViewportPointToRay(t.position);
+                    RaycastHit hit2;
+                    if (Physics.Raycast(ray2, out hit2))
                     {
-                        SphereCollider s = t.GetComponent<SphereCollider>();
+                        GameObject hitObj2 = hit2.collider.gameObject;
+                        if (hitObj2 != null)
+                        {
+                            if (hitObj2.layer != 7) illegalPos = true;
+                        }
                     }
                 }
+
+
             }
         }
+
+        return illegalPos;
     }
 }

@@ -1095,7 +1095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singlePortalMaterial: {fileID: 2100000, guid: 6b9e7573738612848a6e7cce1f1986fb,
     type: 2}
-  doublePortalMaterial: {fileID: 2100000, guid: 3f287932c12836b4c9d95da3803b74d9,
+  bluePortalMaterial: {fileID: 2100000, guid: 3f287932c12836b4c9d95da3803b74d9, type: 2}
+  orangePortalMaterial: {fileID: 2100000, guid: fc3add62201b6a24faca73fc9b51ba8e,
     type: 2}
   bluePortalPrefab: {fileID: 8658630651341542137, guid: 7ddf922461a5c894c9f8f6af4324db49,
     type: 3}

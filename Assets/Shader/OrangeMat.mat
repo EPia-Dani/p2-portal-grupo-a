@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PortalMaterial
+  m_Name: OrangeMat
   m_Shader: {fileID: 4800000, guid: 84f4363faab0f9542a2d76634432598b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,21 +24,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 3c8435c8da83de3469e7b7ac0d74c7f8, type: 2}
+        m_Texture: {fileID: 8400000, guid: ba405541d00ce1d469046e07a8ae8249, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
         m_Texture: {fileID: 2800000, guid: c57841bf28881744ebc54ee6dc04773a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _cullingText:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cutout: 0.2
-    - _clippingOffset: 0.25
+    - _Cutout: 0.5
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
