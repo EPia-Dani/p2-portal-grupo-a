@@ -65,7 +65,7 @@ public class ShootPortal : MonoBehaviour
                     Vector3 hitPoint = hit.point + hit.normal * 0.01f;
                     Quaternion rotacion = Quaternion.LookRotation(hit.normal);
 
-                    if (isBluePortal)
+                    if (isBluePortal && isValidPosition(bluePortalPrefab))
                     {
                         if (bluePortalGameObject != null)
                         {
@@ -131,9 +131,13 @@ public class ShootPortal : MonoBehaviour
 
     private bool isValidPosition(GameObject portalPrefab)
     {
-        bool illegalPos = false;
+        bool illegalPos = true;
         Transform points = portalPrefab.transform.Find("ValidPosition");
-        List<Transform> ValidPoints = points.GetComponentsInChildren<Transform>().ToList();
+        List<Transform> ValidPoints = new List<Transform>();
+        foreach (Transform point in points)
+        {
+            ValidPoints.Add(point);
+        }
 
         Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
         Ray ray = playerCamera.ViewportPointToRay(shootDirection);
@@ -146,7 +150,7 @@ public class ShootPortal : MonoBehaviour
             {
                 if (hitObj.layer != 7)
                 {
-                    illegalPos = true;
+                    illegalPos = false;
                     return illegalPos;
                 }
 
@@ -157,15 +161,20 @@ public class ShootPortal : MonoBehaviour
                 //TODO: refactorizar
                 foreach (Transform t in ValidPoints)
                 {
-                    Ray ray2 = playerCamera.ViewportPointToRay(t.position);
+                    Vector3 viewportPos = playerCamera.WorldToViewportPoint(t.localPosition);
+                    Ray ray2 = playerCamera.ViewportPointToRay(viewportPos);
                     RaycastHit hit2;
                     if (Physics.Raycast(ray2, out hit2))
                     {
                         GameObject hitObj2 = hit2.collider.gameObject;
                         if (hitObj2 != null)
                         {
-                            if (hitObj2.layer != 7) illegalPos = true;
+                            if (hitObj2.layer != 7) illegalPos = false;
                         }
+                    }
+                    else
+                    {
+                        illegalPos = false;
                     }
                 }
 
@@ -173,6 +182,7 @@ public class ShootPortal : MonoBehaviour
             }
         }
 
+        Debug.Log(illegalPos);
         return illegalPos;
     }
 }
