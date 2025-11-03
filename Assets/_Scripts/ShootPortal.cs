@@ -17,28 +17,76 @@ public class ShootPortal : MonoBehaviour
 
     public GameObject bluePortalPrefab;
     public GameObject orangePortalPrefab;
+
+    public GameObject bluePortalSprite;
+    public GameObject orangePortalSprite;
     
     private GameObject bluePortalGameObject;
     private GameObject orangePortalGameObject;
+    private bool isHoldingFire = false;
+    private bool isHoldingRight = false;
 
     private void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
-    public void OnFire(InputAction.CallbackContext context)
+    private void Update()
     {
-        if (context.performed && !isFiring)
+        if (isHoldingFire)
         {
-            StartCoroutine(FireCoroutine(true));
+            DrawPortalSprite(bluePortalSprite);
+        }
+        if (isHoldingRight)
+        {
+            DrawPortalSprite(orangePortalSprite);
         }
     }
 
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isHoldingFire = true;
+        }
+        if (context.canceled && !isFiring)
+        {
+            isHoldingFire = false;
+            bluePortalSprite.SetActive(false);
+            StartCoroutine(FireCoroutine(true));
+        }
+    }
     public void OnRight(InputAction.CallbackContext context)
     {
-        if (context.performed && !isFiring)
+        if (context.started)
         {
+            isHoldingRight = true;
+        }
+        if (context.canceled && !isFiring)
+        {
+            isHoldingRight = false;
+            orangePortalSprite.SetActive(false);
             StartCoroutine(FireCoroutine(false));
+        }
+    }
+
+    private void DrawPortalSprite(GameObject portalSprite)
+    {
+        if (isValidPosition())
+        {
+            Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
+            Ray ray = playerCamera.ViewportPointToRay(shootDirection);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                portalSprite.SetActive(true);
+                portalSprite.transform.position = hit.point + hit.normal * 0.01f;
+                portalSprite.transform.rotation = Quaternion.LookRotation(hit.normal);
+            }
+        }
+        else
+        {
+            portalSprite.SetActive(false);
         }
     }
 
@@ -58,50 +106,47 @@ public class ShootPortal : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             GameObject hitObj = hit.collider.gameObject;
-            if (hitObj != null)
+            if (hitObj.layer == 7)
             {
-                if (hitObj.layer == 7)
+                Vector3 hitPoint = hit.point + hit.normal * 0.01f;
+                Quaternion rotacion = Quaternion.LookRotation(hit.normal);
+
+                if (isBluePortal && isValidPosition())
                 {
-                    Vector3 hitPoint = hit.point + hit.normal * 0.01f;
-                    Quaternion rotacion = Quaternion.LookRotation(hit.normal);
-
-                    if (isBluePortal && isValidPosition(bluePortalPrefab))
+                    if (bluePortalGameObject != null)
                     {
-                        if (bluePortalGameObject != null)
-                        {
-                            Destroy(bluePortalGameObject);
-                        }
-
-                        bluePortalGameObject = Instantiate(bluePortalPrefab, hitPoint, rotacion);
-                        if (orangePortalGameObject != null)
-                        {
-                            Portal bluePortal = bluePortalGameObject.GetComponent<Portal>();
-                            Portal orangePortal = orangePortalGameObject.GetComponent<Portal>();
-
-                            bluePortal.mirrorPortal = orangePortal;
-                            orangePortal.mirrorPortal = bluePortal;
-                        }
-                    }
-                    else
-                    {
-                        if (orangePortalGameObject != null)
-                        {
-                            Destroy(orangePortalGameObject);
-                        }
-
-                        orangePortalGameObject = Instantiate(orangePortalPrefab, hitPoint, rotacion);
-                        if (bluePortalGameObject != null)
-                        {
-                            Portal orangePortal = orangePortalGameObject.GetComponent<Portal>();
-                            Portal bluePortal = bluePortalGameObject.GetComponent<Portal>();
-
-                            orangePortal.mirrorPortal = bluePortal;
-                            bluePortal.mirrorPortal = orangePortal;
-                        }
+                        Destroy(bluePortalGameObject);
                     }
 
-                    UpdatePortalMaterial();
+                    bluePortalGameObject = Instantiate(bluePortalPrefab, hitPoint, rotacion);
+                    if (orangePortalGameObject != null)
+                    {
+                        Portal bluePortal = bluePortalGameObject.GetComponent<Portal>();
+                        Portal orangePortal = orangePortalGameObject.GetComponent<Portal>();
+
+                        bluePortal.mirrorPortal = orangePortal;
+                        orangePortal.mirrorPortal = bluePortal;
+                    }
                 }
+                else if (!isBluePortal && isValidPosition())
+                {
+                    if (orangePortalGameObject != null)
+                    {
+                        Destroy(orangePortalGameObject);
+                    }
+
+                    orangePortalGameObject = Instantiate(orangePortalPrefab, hitPoint, rotacion);
+                    if (bluePortalGameObject != null)
+                    {
+                        Portal orangePortal = orangePortalGameObject.GetComponent<Portal>();
+                        Portal bluePortal = bluePortalGameObject.GetComponent<Portal>();
+
+                        orangePortal.mirrorPortal = bluePortal;
+                        bluePortal.mirrorPortal = orangePortal;
+                    }
+                }
+
+                UpdatePortalMaterial();
             }
         }
 
@@ -129,14 +174,14 @@ public class ShootPortal : MonoBehaviour
         }
     }
 
-    private bool isValidPosition(GameObject portalPrefab)
+    private bool isValidPosition()
     {
         bool illegalPos = true;
-        Transform points = portalPrefab.transform.Find("ValidPosition");
-        List<Transform> ValidPoints = new List<Transform>();
-        foreach (Transform point in points)
+        Transform points = GameObject.Find("ValidPosition").transform;
+        Transform[] ValidPoints = new Transform[points.childCount];
+        for (int i = 0; i < points.childCount; i++)
         {
-            ValidPoints.Add(point);
+            ValidPoints[i] = points.GetChild(i);
         }
 
         Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
@@ -146,43 +191,36 @@ public class ShootPortal : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             GameObject hitObj = hit.collider.gameObject;
-            if (hitObj != null)
+            if (hitObj.layer != 7)
             {
-                if (hitObj.layer != 7)
+                illegalPos = false;
+                return illegalPos;
+            }
+
+            points.position = hit.point + hit.normal * 0.01f;
+            points.rotation = Quaternion.LookRotation(hit.normal);
+
+            //TODO: refactorizar
+            foreach (Transform t in ValidPoints)
+            {
+                Vector3 viewportPos = playerCamera.WorldToViewportPoint(t.position);
+                Ray ray2 = playerCamera.ViewportPointToRay(viewportPos);
+                //Debug.DrawLine(playerCamera.transform.position, t.position, Color.red, 100f);
+                RaycastHit hit2;
+                if (Physics.Raycast(ray2, out hit2))
+                {
+                    GameObject hitObj2 = hit2.collider.gameObject;
+                    if (hitObj2 != null)
+                    {
+                        if (hitObj2.layer != 7) illegalPos = false;
+                    }
+                }
+                else
                 {
                     illegalPos = false;
-                    return illegalPos;
                 }
-
-                Vector3 hitPoint = hit.point + hit.normal * 0.01f;
-                Quaternion rotacion = Quaternion.LookRotation(hit.normal);
-                Instantiate(points, hitPoint, rotacion);
-
-                //TODO: refactorizar
-                foreach (Transform t in ValidPoints)
-                {
-                    Vector3 viewportPos = playerCamera.WorldToViewportPoint(t.localPosition);
-                    Ray ray2 = playerCamera.ViewportPointToRay(viewportPos);
-                    RaycastHit hit2;
-                    if (Physics.Raycast(ray2, out hit2))
-                    {
-                        GameObject hitObj2 = hit2.collider.gameObject;
-                        if (hitObj2 != null)
-                        {
-                            if (hitObj2.layer != 7) illegalPos = false;
-                        }
-                    }
-                    else
-                    {
-                        illegalPos = false;
-                    }
-                }
-
-
             }
         }
-
-        Debug.Log(illegalPos);
         return illegalPos;
     }
 }
