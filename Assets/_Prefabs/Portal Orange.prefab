@@ -137,8 +137,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5603882054604246349}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0847002, y: 0.027618926, z: 0.002348674, w: 0.99602085}
-  m_LocalPosition: {x: -2.9855647, y: -0.2551036, z: -3.754673}
+  m_LocalRotation: {x: -0.007026232, y: 0.31138384, z: 0.0023023863, w: 0.95025545}
+  m_LocalPosition: {x: 2.4545383, y: 0.025782585, z: -4.51468}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,7 +175,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 4.803774
+  near clip plane: 5.138848
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -288,6 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8964500232151499832}
   - component: {fileID: 1085030900522620404}
+  - component: {fileID: 6589536801096457711}
   m_Layer: 0
   m_Name: Portal Orange
   m_TagString: Untagged
@@ -330,3 +331,24 @@ MonoBehaviour:
   mirrorPortal: {fileID: 3661978731739195576, guid: 7ddf922461a5c894c9f8f6af4324db49,
     type: 3}
   offsetNearPlane: 0
+--- !u!65 &6589536801096457711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7718686779990817309}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.070459, y: 2.6214094, z: 0.37055826}
+  m_Center: {x: -0.011319399, y: -0.023905754, z: 0.013034105}

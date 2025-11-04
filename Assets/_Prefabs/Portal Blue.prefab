@@ -288,6 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088251220915707955}
   - component: {fileID: 3661978731739195576}
+  - component: {fileID: 4607665850985626772}
   m_Layer: 0
   m_Name: Portal Blue
   m_TagString: Untagged
@@ -330,3 +331,24 @@ MonoBehaviour:
   mirrorPortal: {fileID: 1085030900522620404, guid: fbef85cf87573024498f1450142237f8,
     type: 3}
   offsetNearPlane: 0
+--- !u!65 &4607665850985626772
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658630651341542137}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.070459, y: 2.6214094, z: 0.37055826}
+  m_Center: {x: -0.011319399, y: -0.023905754, z: 0.013034105}
