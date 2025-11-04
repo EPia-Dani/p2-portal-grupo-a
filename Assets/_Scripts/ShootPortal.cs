@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.Shapes;
 
 public class ShootPortal : MonoBehaviour
 {
     private Camera playerCamera;
     private float shotDelay = .15f;
     private bool isFiring = false;
+    private float cubeDistance = 2f;
+    private bool haveCube = false;
+    private GameObject cube;
+    private float throwCubeSpeed = 8f;
+
+    public Transform attachPosition;
 
     public Material singlePortalMaterial;
     public Material bluePortalMaterial;
@@ -41,6 +48,7 @@ public class ShootPortal : MonoBehaviour
         {
             DrawPortalSprite(orangePortalSprite);
         }
+        UpdateCubeMovement();
     }
 
     public void OnFire(InputAction.CallbackContext context)
@@ -53,7 +61,7 @@ public class ShootPortal : MonoBehaviour
         {
             isHoldingFire = false;
             bluePortalSprite.SetActive(false);
-            StartCoroutine(FireCoroutine(true));
+            StartCoroutine(FireCoroutine());
         }
     }
     public void OnRight(InputAction.CallbackContext context)
@@ -66,7 +74,7 @@ public class ShootPortal : MonoBehaviour
         {
             isHoldingRight = false;
             orangePortalSprite.SetActive(false);
-            StartCoroutine(FireCoroutine(false));
+            StartCoroutine(RightCoroutine());
         }
     }
 
@@ -90,18 +98,27 @@ public class ShootPortal : MonoBehaviour
         }
     }
 
-    private IEnumerator FireCoroutine(bool isBluePortal)
+    private IEnumerator FireCoroutine()
     {
         isFiring = true;
-        Fire(isBluePortal);
+        Fire();
+        yield return new WaitForSeconds(shotDelay);
+    }
+    private IEnumerator RightCoroutine()
+    {
+        isFiring = true;
+        Right();
         yield return new WaitForSeconds(shotDelay);
     }
 
-    private void Fire(bool isBluePortal)
+    private void Fire()
     {
         Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
         Ray ray = playerCamera.ViewportPointToRay(shootDirection);
         RaycastHit hit;
+
+        FireCube();
+        CatchCube();
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -111,7 +128,7 @@ public class ShootPortal : MonoBehaviour
                 Vector3 hitPoint = hit.point + hit.normal * 0.01f;
                 Quaternion rotacion = Quaternion.LookRotation(hit.normal);
 
-                if (isBluePortal && isValidPosition())
+                if (isValidPosition())
                 {
                     if (bluePortalGameObject != null)
                     {
@@ -128,7 +145,31 @@ public class ShootPortal : MonoBehaviour
                         orangePortal.mirrorPortal = bluePortal;
                     }
                 }
-                else if (!isBluePortal && isValidPosition())
+
+                UpdatePortalMaterial();
+            }
+        }
+
+        isFiring = false;
+    }
+    
+    private void Right()
+    {
+        Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
+        Ray ray = playerCamera.ViewportPointToRay(shootDirection);
+        RaycastHit hit;
+
+        ReleaseCube();
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject hitObj = hit.collider.gameObject;
+            if (hitObj.layer == 7)
+            {
+                Vector3 hitPoint = hit.point + hit.normal * 0.01f;
+                Quaternion rotacion = Quaternion.LookRotation(hit.normal);
+
+                if (isValidPosition())
                 {
                     if (orangePortalGameObject != null)
                     {
@@ -222,5 +263,71 @@ public class ShootPortal : MonoBehaviour
             }
         }
         return illegalPos;
+    }
+
+    private void CatchCube()
+    {
+        Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
+        Ray ray = playerCamera.ViewportPointToRay(shootDirection);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, cubeDistance))
+        {
+            GameObject hitObj = hit.collider.gameObject;
+            if (hitObj.tag == "Cube")
+            {
+                cube = hitObj;
+                haveCube = true;
+
+                Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
+                cubeRidigbody.useGravity = false;
+
+                hitObj.transform.SetParent(attachPosition);
+                hitObj.transform.localPosition = Vector3.zero;
+                hitObj.transform.localRotation = Quaternion.identity;
+            }
+        }
+    }
+
+    private void FireCube()
+    {
+        if (haveCube)
+        {
+            Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
+            cubeRidigbody.useGravity = true;
+            cube.transform.SetParent(null);
+
+            Vector3 direction = playerCamera.transform.forward;
+            cubeRidigbody.linearVelocity = direction * throwCubeSpeed;
+
+            haveCube = false;
+            cube = null;
+        }
+    }
+    
+    private void ReleaseCube()
+    {
+        if (haveCube)
+        {
+            Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
+            cubeRidigbody.useGravity = true;
+            cube.transform.SetParent(null);
+            haveCube = false;
+            cube = null;
+        }
+    }
+
+
+    private void UpdateCubeMovement()
+    {
+        if (haveCube && cube != null)
+        {
+            Vector3 targetPos = attachPosition.position;
+            Vector3 direction = (targetPos - cube.transform.position);
+            float distance = direction.magnitude;
+
+            Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
+            cubeRidigbody.linearVelocity = direction * distance;
+        }
     }
 }
