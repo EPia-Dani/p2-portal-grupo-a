@@ -49,11 +49,27 @@ public class Portal : MonoBehaviour
             Vector3 worldPosition = mirrorPortal.transform.TransformPoint(localPosition) + mirrorPortal.transform.forward * 0.1f;
             player.transform.position = worldPosition;
 
-            //TODO: Girar el personaje cuando pasa por el portal
+            // Giro de dirección:
+            Vector3 localDirection =  reflectionTransform.InverseTransformDirection(playerCamera.transform.forward);
+            localDirection = new Vector3(-localDirection.x, localDirection.y, -localDirection.z);
+
+            Vector3 newDirection = mirrorPortal.transform.TransformDirection(localDirection);
+            Quaternion newRotation = Quaternion.LookRotation(newDirection, mirrorPortal.transform.up);
+
+            player.transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, 0);
+
+            FPSController fps = player.GetComponent<FPSController>();
+            fps.SetYaw(newRotation.eulerAngles.y);
+
+            float pitch = newRotation.eulerAngles.x;
+            if (pitch > 180) pitch -= 360;
+            fps.SetPitch(Mathf.Clamp(pitch, fps.mMinPitch, fps.mMaxPitch));
+            fps.ApplyRotationImmediate();
+
             /*Vector3 localDirection = reflectionTransform.InverseTransformDirection(playerCamera.transform.forward);
             localDirection.z = -localDirection.z;
-            localDirection.x = -localDirection.x;*/
-            /*Quaternion rotation = Quaternion.Inverse(mirrorPortal.reflectionTransform.rotation) * player.transform.rotation;
+            localDirection.x = -localDirection.x;
+            Quaternion rotation = Quaternion.Inverse(mirrorPortal.reflectionTransform.rotation) * player.transform.rotation;
             player.transform.rotation = mirrorPortal.transform.rotation * rotation;*/
 
             characterController.enabled = true;

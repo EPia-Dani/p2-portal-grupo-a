@@ -66,7 +66,21 @@ public class FPSController : MonoBehaviour
         characterController.Move(finalDirection);
 
         // ----------------------------------------Salto-----------------------------------------------------------------------
-        _mVerticalSpeed += Physics.gravity.y * Time.deltaTime * 2;
+        //_mVerticalSpeed += Physics.gravity.y * Time.deltaTime * 2;
+
+        // nueva gravedad para que no caiga al instante
+        if (isGrounded && _mVerticalSpeed < 0f)
+        {
+            _mVerticalSpeed = -2f; // fuerza hacia abajo para mantener pegado al suelo
+        }
+        _mVerticalSpeed += Physics.gravity.y * Time.deltaTime;
+
+        Vector3 verticalMove = new Vector3(0, _mVerticalSpeed, 0) * Time.deltaTime;
+        CollisionFlags flags = characterController.Move(verticalMove);
+
+        isGrounded = (flags & CollisionFlags.CollidedBelow) != 0;
+
+
         // Convertir de velocidad vertical en desplazamiento vertical
         finalDirection.y = _mVerticalSpeed * Time.deltaTime;
         CollisionFlags collisionFlags = characterController.Move(finalDirection);
@@ -122,5 +136,23 @@ public class FPSController : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    public void SetYaw(float yaw)
+    {
+        _mYaw = yaw;
+    }
+
+    public void SetPitch(float pitch)
+    {
+        _mPitch = invertPitch ? -pitch : pitch;
+    }
+
+    public void ApplyRotationImmediate()
+    {
+        transform.rotation = Quaternion.Euler(0f, _mYaw, 0f);
+        pitchController.localRotation =
+            Quaternion.Euler(_mPitch, 0f, 0f);
+    }
+
 
 }
