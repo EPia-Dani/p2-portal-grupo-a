@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.SceneManagement;
 
 public class ShootPortal : MonoBehaviour
 {
@@ -268,6 +269,7 @@ public class ShootPortal : MonoBehaviour
     private void CatchCube()
     {
         Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
+        
         Ray ray = playerCamera.ViewportPointToRay(shootDirection);
         RaycastHit hit;
 
@@ -276,15 +278,17 @@ public class ShootPortal : MonoBehaviour
             GameObject hitObj = hit.collider.gameObject;
             if (hitObj.tag == "Cube")
             {
-                cube = hitObj;
-                haveCube = true;
+                if (!haveCube)
+                {
+                    cube = hitObj;
+                    haveCube = true;
+                    Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
+                    cubeRidigbody.useGravity = false;
 
-                Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
-                cubeRidigbody.useGravity = false;
-
-                hitObj.transform.SetParent(attachPosition);
-                hitObj.transform.localPosition = Vector3.zero;
-                hitObj.transform.localRotation = Quaternion.identity;
+                    hitObj.transform.SetParent(attachPosition);
+                    hitObj.transform.localPosition = Vector3.zero;
+                    hitObj.transform.localRotation = Quaternion.identity;
+                }
             }
         }
     }
@@ -293,19 +297,26 @@ public class ShootPortal : MonoBehaviour
     {
         if (haveCube)
         {
-            Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
-            cubeRidigbody.useGravity = true;
-            cube.transform.SetParent(null);
-
-            Vector3 direction = playerCamera.transform.forward;
-            cubeRidigbody.linearVelocity = direction * throwCubeSpeed;
-
-            haveCube = false;
-            cube = null;
+            StartCoroutine(FireCubeCoroutine());
         }
     }
-    
-    private void ReleaseCube()
+
+    IEnumerator FireCubeCoroutine() {
+
+        yield return new WaitForSeconds(0.05f);
+
+        Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
+        cubeRidigbody.useGravity = true;
+        cube.transform.SetParent(null);
+
+        Vector3 direction = playerCamera.transform.forward;
+        cubeRidigbody.linearVelocity = direction * throwCubeSpeed;
+
+        haveCube = false;
+        cube = null;
+    }
+
+private void ReleaseCube()
     {
         if (haveCube)
         {
@@ -314,6 +325,7 @@ public class ShootPortal : MonoBehaviour
             cube.transform.SetParent(null);
             haveCube = false;
             cube = null;
+            Debug.Log("Goodbye cube");
         }
     }
 

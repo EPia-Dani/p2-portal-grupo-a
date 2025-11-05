@@ -40,7 +40,6 @@ public class Portal : MonoBehaviour
             CharacterController characterController = player.GetComponent<CharacterController>();
             FPSController fpsController = player.GetComponent<FPSController>();
 
-            Debug.Log("before player: " + player.transform.position);
             characterController.enabled = false;
             fpsController.enabled = false;
 
@@ -66,18 +65,27 @@ public class Portal : MonoBehaviour
             fps.SetPitch(Mathf.Clamp(pitch, fps.mMinPitch, fps.mMaxPitch));
             fps.ApplyRotationImmediate();
 
-            /*Vector3 localDirection = reflectionTransform.InverseTransformDirection(playerCamera.transform.forward);
-            localDirection.z = -localDirection.z;
-            localDirection.x = -localDirection.x;
-            Quaternion rotation = Quaternion.Inverse(mirrorPortal.reflectionTransform.rotation) * player.transform.rotation;
-            player.transform.rotation = mirrorPortal.transform.rotation * rotation;*/
-
             characterController.enabled = true;
             fpsController.enabled = true;
-            Debug.Log("after player: " + worldPosition);
-
 
             StartCoroutine(DisablePortalTemporaly());
+        }
+        else if (other.tag == "Cube")
+        {
+            GameObject companion = GameObject.Find("Cube");
+            //BoxCollider boxCollider = companion.GetComponent<BoxCollider>();
+
+            //boxCollider.enabled = false;
+
+            companion.GetComponent<BoxCollider>().enabled = false;
+
+            Vector3 localPosition = reflectionTransform.InverseTransformPoint(companion.transform.position);
+            localPosition.x = -localPosition.x;
+            Vector3 worldPosition = mirrorPortal.transform.TransformPoint(localPosition) + mirrorPortal.transform.forward * 0.1f;
+            companion.transform.position = worldPosition;
+
+            //boxCollider.enabled = true;
+            companion.GetComponent<BoxCollider>().enabled = true;
         }
     }
 
