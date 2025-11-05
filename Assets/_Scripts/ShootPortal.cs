@@ -325,7 +325,6 @@ private void ReleaseCube()
             cube.transform.SetParent(null);
             haveCube = false;
             cube = null;
-            Debug.Log("Goodbye cube");
         }
     }
 

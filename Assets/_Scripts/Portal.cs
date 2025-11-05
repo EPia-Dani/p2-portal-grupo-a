@@ -72,20 +72,34 @@ public class Portal : MonoBehaviour
         }
         else if (other.tag == "Cube")
         {
-            GameObject companion = GameObject.Find("Cube");
-            //BoxCollider boxCollider = companion.GetComponent<BoxCollider>();
+            Debug.Log("found a cube!");
 
-            //boxCollider.enabled = false;
-
-            companion.GetComponent<BoxCollider>().enabled = false;
-
-            Vector3 localPosition = reflectionTransform.InverseTransformPoint(companion.transform.position);
+            Vector3 localPosition = reflectionTransform.InverseTransformPoint(other.gameObject.transform.position);
             localPosition.x = -localPosition.x;
             Vector3 worldPosition = mirrorPortal.transform.TransformPoint(localPosition) + mirrorPortal.transform.forward * 0.1f;
-            companion.transform.position = worldPosition;
+            other.gameObject.transform.position = worldPosition;
 
-            //boxCollider.enabled = true;
-            companion.GetComponent<BoxCollider>().enabled = true;
+
+            Rigidbody cubeRigid = other.gameObject.GetComponent<Rigidbody>();
+
+            // esto ajusta la rotación y posición del cubo sobre sí mismo, pero no la dirección en la que se mueve.
+            // No sé ni si esto es necesario teniendo en cuenta que las 6 caras son idénticas.
+                Vector3 moveDirection = playerCamera.transform.forward;
+                Vector3 localDirection = reflectionTransform.InverseTransformDirection(moveDirection);
+
+                localDirection = new Vector3(-localDirection.x, localDirection.y, -localDirection.z);
+                Vector3 newDirection = mirrorPortal.transform.TransformDirection(localDirection);
+
+                Quaternion newRotation = Quaternion.LookRotation(newDirection, mirrorPortal.transform.up);
+
+                cubeRigid.linearVelocity = newDirection * cubeRigid.linearVelocity.magnitude;
+                other.gameObject.transform.rotation = newRotation;
+
+            
+            //todo: calcular dirección en la que se mueve el cubo, para cambiársela cuando se teletransporta.
+
+            StartCoroutine(DisablePortalTemporaly());
+
         }
     }
 
