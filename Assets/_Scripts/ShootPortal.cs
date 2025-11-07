@@ -290,6 +290,20 @@ public class ShootPortal : MonoBehaviour
                     hitObj.transform.localRotation = Quaternion.identity;
                 }
             }
+            else if (hitObj.tag == "Turret")
+            {
+                if (!haveCube)
+                {
+                    cube = hitObj;
+                    haveCube = true;
+                    Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
+                    cubeRidigbody.useGravity = false;
+
+                    hitObj.transform.SetParent(attachPosition);
+                    hitObj.transform.localPosition = Vector3.zero;
+                    hitObj.transform.localRotation = Quaternion.identity;
+                }
+            }
         }
     }
 
