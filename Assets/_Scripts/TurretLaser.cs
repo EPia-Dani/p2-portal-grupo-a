@@ -5,7 +5,7 @@ public class TurretLaser : MonoBehaviour
     public LineRenderer lineRenderer;
     public float maxDistance = 90f;
     public float angleLaser = 45f;
-    public bool tempo;
+    public bool activate = true;
 
     private void Start()
     {
@@ -16,20 +16,55 @@ public class TurretLaser : MonoBehaviour
 
     private void Update()
     {
+        if (activate)
+        {
+            TurretLaset();
+        }
+    }
+
+    private void TurretLaset()
+    {
         Vector3 endPos;
         RaycastHit hit;
         if (Physics.Raycast(new(transform.position, transform.forward), out hit, maxDistance))
         {
             endPos = hit.point;
-            tempo = true;
+
+            GameObject hitObj = hit.collider.gameObject;
+            if (hitObj.tag == "Player")
+            {
+                DeathController deathController = hitObj.GetComponent<DeathController>();
+            }
+            else if (hitObj.tag == "Turret")
+            {
+                TurretLaser turretLaser = hitObj.GetComponent<TurretLaser>();
+                turretLaser.TurretDeactivate();
+            }
         }
         else
         {
             endPos = transform.position + transform.forward * maxDistance;
-            tempo=false;
         }
 
         lineRenderer.SetPosition(0, lineRenderer.transform.position);
         lineRenderer.SetPosition(1, endPos);
     }
+
+    public void TurretDeactivate()
+    {
+        if (activate)
+        {
+            lineRenderer.enabled = false;
+            activate = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Cube" || other.tag == "Turret")
+        {
+            TurretDeactivate();
+        }
+    }
+
 }
