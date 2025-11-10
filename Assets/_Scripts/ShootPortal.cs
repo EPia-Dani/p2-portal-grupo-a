@@ -16,6 +16,7 @@ public class ShootPortal : MonoBehaviour
     private bool haveCube = false;
     private GameObject cube;
     private float throwCubeSpeed = 8f;
+    private Vector3 spriteOriginalScale;
 
     public Transform attachPosition;
 
@@ -41,6 +42,7 @@ public class ShootPortal : MonoBehaviour
     private void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        spriteOriginalScale = bluePortalSprite.transform.localScale;
     }
 
     private void Update()
@@ -105,13 +107,13 @@ public class ShootPortal : MonoBehaviour
             }
             if (scrollValue.y > 0) 
             {
-                Debug.Log("enlarge");
-                portalSprite.transform.localScale += Vector3.one * 1.02f;
+                portalSprite.transform.localScale += spriteOriginalScale * 0.5f;
+                Debug.Log("enlarge: " + portalSprite.transform.localScale);
             }
             else if (scrollValue.y < 0)
             {
-                Debug.Log("reduce");
-                portalSprite.transform.localScale -= Vector3.one * 1.02f;
+                portalSprite.transform.localScale -= spriteOriginalScale * 0.5f;
+                Debug.Log("reduce: " + portalSprite.transform.localScale);
             }
         }
         else
