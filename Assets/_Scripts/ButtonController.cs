@@ -5,18 +5,17 @@ using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
-
     public GameObject pressableButton;
+    public Animator doorAnimator;
 
     void OnTriggerEnter(Collider other)
     {        
         if (other.CompareTag("Cube"))
         {
-            Debug.Log("OOoh a cube");
             pressableButton.transform.position -= new Vector3(0, 0.1f, 0);
 
             // open door or something else
-
+            doorAnimator.SetBool("DoorTriggered", true);
         }
 
     }
@@ -29,6 +28,7 @@ public class ButtonController : MonoBehaviour
             StartCoroutine(DisableButtonTemporaly());
 
             // open door or something else
+            doorAnimator.SetBool("DoorTriggered", false);
         }
     }
 

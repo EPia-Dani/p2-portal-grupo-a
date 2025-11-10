@@ -3342,6 +3342,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1645488868}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &355702902 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95159503622219818, guid: 5c4c8dcc12aea744a8fd42b64f45aced,
+    type: 3}
+  m_PrefabInstance: {fileID: 44449058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &356899846 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4475498900819914, guid: 80d1367295ec94f4e8c7ee9b5f66079a,
@@ -8155,6 +8161,7 @@ MonoBehaviour:
     type: 3}
   bluePortalSprite: {fileID: 326088812}
   orangePortalSprite: {fileID: 912365746}
+  crosshairController: {fileID: 1784283743}
 --- !u!114 &818633442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16679,6 +16686,7 @@ GameObject:
   - component: {fileID: 1784283740}
   - component: {fileID: 1784283742}
   - component: {fileID: 1784283741}
+  - component: {fileID: 1784283743}
   m_Layer: 5
   m_Name: Puntero
   m_TagString: Untagged
@@ -16743,6 +16751,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784283739}
   m_CullTransparentMesh: 1
+--- !u!114 &1784283743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784283739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa687cd07542c440b6e20fec421aa9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Image: {fileID: 1784283741}
+  noPortal: {fileID: 21300000, guid: f489249a30d2e0e4196b9d24b86ac0ba, type: 3}
+  bluePortal: {fileID: 21300000, guid: cc7037bba0a5f86459702197ec697a66, type: 3}
+  orangePortal: {fileID: 21300000, guid: 5e94f694b000e2e4985c5b79347c2f74, type: 3}
+  bothPortal: {fileID: 21300000, guid: 8a81d4c668a07384cbb4ec76e1a78117, type: 3}
 --- !u!4 &1789045839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4475498900819914, guid: 80d1367295ec94f4e8c7ee9b5f66079a,
@@ -19669,6 +19694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressableButton: {fileID: 1079828886}
+  doorAnimator: {fileID: 355702902}
 --- !u!65 &2045940455
 BoxCollider:
   m_ObjectHideFlags: 0

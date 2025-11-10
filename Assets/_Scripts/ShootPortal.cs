@@ -28,6 +28,8 @@ public class ShootPortal : MonoBehaviour
 
     public GameObject bluePortalSprite;
     public GameObject orangePortalSprite;
+
+    public CrosshairController crosshairController;
     
     private GameObject bluePortalGameObject;
     private GameObject orangePortalGameObject;
@@ -104,12 +106,12 @@ public class ShootPortal : MonoBehaviour
             if (scrollValue.y > 0) 
             {
                 Debug.Log("enlarge");
-                portalSprite.transform.localScale += Vector3.one * 1.1f;
+                portalSprite.transform.localScale += Vector3.one * 1.02f;
             }
             else if (scrollValue.y < 0)
             {
                 Debug.Log("reduce");
-                portalSprite.transform.localScale -= Vector3.one * 1.1f;
+                portalSprite.transform.localScale -= Vector3.one * 1.02f;
             }
         }
         else
@@ -173,6 +175,7 @@ public class ShootPortal : MonoBehaviour
                 }
 
                 UpdatePortalMaterial();
+                UpdatePortalCrosshair();
             }
         }
 
@@ -214,6 +217,7 @@ public class ShootPortal : MonoBehaviour
                 }
 
                 UpdatePortalMaterial();
+                UpdatePortalCrosshair();
             }
         }
 
@@ -238,6 +242,26 @@ public class ShootPortal : MonoBehaviour
             Material[] materials = rend.materials;
             materials[0] = doublePortal ? bluePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
+        }
+    }
+
+    private void UpdatePortalCrosshair()
+    {
+        if (orangePortalGameObject == null && bluePortalGameObject == null)
+        {
+            crosshairController.SetNoPortal();
+        }
+        else if (orangePortalGameObject != null && bluePortalGameObject == null)
+        {
+            crosshairController.SetOrangePortal();
+        }
+        else if (orangePortalGameObject == null && bluePortalGameObject != null)
+        {
+            crosshairController.SetBluePortal();
+        }
+        else if (orangePortalGameObject != null && bluePortalGameObject != null)
+        {
+            crosshairController.SetBothPortal();
         }
     }
 
