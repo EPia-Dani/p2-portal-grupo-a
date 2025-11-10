@@ -34,6 +34,8 @@ public class ShootPortal : MonoBehaviour
     private bool isHoldingFire = false;
     private bool isHoldingRight = false;
 
+    private Vector2 scrollValue;
+
     private void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -50,6 +52,13 @@ public class ShootPortal : MonoBehaviour
             DrawPortalSprite(orangePortalSprite);
         }
         UpdateCubeMovement();
+        
+    }
+
+    public void OnScrollValueChanged(InputAction.CallbackContext context)
+    {
+        scrollValue = context.ReadValue<Vector2>();
+        StartCoroutine(ResetScrollValueCoroutine());
     }
 
     public void OnFire(InputAction.CallbackContext context)
@@ -92,11 +101,27 @@ public class ShootPortal : MonoBehaviour
                 portalSprite.transform.position = hit.point + hit.normal * 0.01f;
                 portalSprite.transform.rotation = Quaternion.LookRotation(hit.normal);
             }
+            if (scrollValue.y > 0) 
+            {
+                Debug.Log("enlarge");
+                portalSprite.transform.localScale += Vector3.one * 1.1f;
+            }
+            else if (scrollValue.y < 0)
+            {
+                Debug.Log("reduce");
+                portalSprite.transform.localScale -= Vector3.one * 1.1f;
+            }
         }
         else
         {
             portalSprite.SetActive(false);
         }
+    }
+
+    private IEnumerator ResetScrollValueCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        scrollValue = Vector2.zero;
     }
 
     private IEnumerator FireCoroutine()
