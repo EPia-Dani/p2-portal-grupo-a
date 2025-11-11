@@ -8016,7 +8016,7 @@ MonoBehaviour:
   moveSpeed: 4
   runSpeed: 7
   jumpSpeed: 5
-  rotationSpeed: 8
+  rotationSpeed: 6
   invertPitch: 1
   mMinPitch: -89
   mMaxPitch: 89

@@ -38,22 +38,28 @@ public class ShootPortal : MonoBehaviour
     private bool isHoldingRight = false;
 
     private Vector2 scrollValue;
+    private float bluePortalScaleValue = 1;
+    private float orangePortalScaleValue = 1;
+    private Vector3 maxSize;
+    private Vector3 minSize;
 
     private void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         spriteOriginalScale = bluePortalSprite.transform.localScale;
+        maxSize = new Vector3(1.5f, 1.5f, 1.5f);
+        minSize = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     private void Update()
     {
         if (isHoldingFire)
         {
-            DrawPortalSprite(bluePortalSprite);
+            bluePortalScaleValue = DrawPortalSprite(bluePortalSprite, bluePortalScaleValue);
         }
         if (isHoldingRight)
         {
-            DrawPortalSprite(orangePortalSprite);
+            orangePortalScaleValue = DrawPortalSprite(orangePortalSprite, orangePortalScaleValue);
         }
         UpdateCubeMovement();
         
@@ -69,6 +75,8 @@ public class ShootPortal : MonoBehaviour
     {
         if (context.started)
         {
+            bluePortalScaleValue = 1;
+            bluePortalSprite.transform.localScale = spriteOriginalScale;
             isHoldingFire = true;
         }
         if (context.canceled && !isFiring)
@@ -82,6 +90,8 @@ public class ShootPortal : MonoBehaviour
     {
         if (context.started)
         {
+            orangePortalScaleValue = 1;
+            orangePortalSprite.transform.localScale = spriteOriginalScale;
             isHoldingRight = true;
         }
         if (context.canceled && !isFiring)
@@ -92,34 +102,43 @@ public class ShootPortal : MonoBehaviour
         }
     }
 
-    private void DrawPortalSprite(GameObject portalSprite)
+    private float DrawPortalSprite(GameObject portalSprite, float portalScale)
     {
         if (isValidPosition())
         {
             Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
             Ray ray = playerCamera.ViewportPointToRay(shootDirection);
             RaycastHit hit;
+            Vector3 newTransform = portalSprite.transform.localScale;
+            
             if (Physics.Raycast(ray, out hit))
             {
                 portalSprite.SetActive(true);
-                portalSprite.transform.position = hit.point + hit.normal * 0.01f;
-                portalSprite.transform.rotation = Quaternion.LookRotation(hit.normal);
+                Transform t = portalSprite.transform;
+                t.position = hit.point + hit.normal * 0.01f;
+                t.rotation = Quaternion.LookRotation(hit.normal);
+
+                if (scrollValue.y != 0)
+                {
+                    newTransform += spriteOriginalScale * 0.3f * Mathf.Sign(scrollValue.y);
+                    portalScale += portalScale * 0.3f * Mathf.Sign(scrollValue.y);
+                    portalScale = Mathf.Clamp(portalScale, 0.5f, 1.5f);
+
+                    t.localScale = spriteOriginalScale * portalScale;
+
+                }
             }
-            if (scrollValue.y > 0) 
-            {
-                portalSprite.transform.localScale += spriteOriginalScale * 0.5f;
-                Debug.Log("enlarge: " + portalSprite.transform.localScale);
-            }
-            else if (scrollValue.y < 0)
-            {
-                portalSprite.transform.localScale -= spriteOriginalScale * 0.5f;
-                Debug.Log("reduce: " + portalSprite.transform.localScale);
-            }
+
+            float factor = newTransform.x / spriteOriginalScale.x;
+            factor = Mathf.Clamp(factor, 0.5f, 1.5f);
+            portalSprite.transform.localScale = spriteOriginalScale * factor;
+
         }
         else
         {
             portalSprite.SetActive(false);
         }
+        return portalScale;
     }
 
     private IEnumerator ResetScrollValueCoroutine()
@@ -166,6 +185,9 @@ public class ShootPortal : MonoBehaviour
                     }
 
                     bluePortalGameObject = Instantiate(bluePortalPrefab, hitPoint, rotacion);
+                    float newScale = Mathf.Clamp(bluePortalScaleValue, 0.5f, 1.5f);
+                    bluePortalGameObject.transform.localScale = Vector3.one * newScale;
+
                     if (orangePortalGameObject != null)
                     {
                         Portal bluePortal = bluePortalGameObject.GetComponent<Portal>();
@@ -208,6 +230,9 @@ public class ShootPortal : MonoBehaviour
                     }
 
                     orangePortalGameObject = Instantiate(orangePortalPrefab, hitPoint, rotacion);
+                    float newScale = Mathf.Clamp(orangePortalScaleValue, 0.5f, 1.5f);
+                    orangePortalGameObject.transform.localScale = Vector3.one * newScale;
+
                     if (bluePortalGameObject != null)
                     {
                         Portal orangePortal = orangePortalGameObject.GetComponent<Portal>();
