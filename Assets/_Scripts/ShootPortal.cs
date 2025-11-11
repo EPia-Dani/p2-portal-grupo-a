@@ -150,12 +150,14 @@ public class ShootPortal : MonoBehaviour
     private IEnumerator FireCoroutine()
     {
         isFiring = true;
+        SoundManager.Instance.PlaySFX("shoot_portal");
         Fire();
         yield return new WaitForSeconds(shotDelay);
     }
     private IEnumerator RightCoroutine()
     {
         isFiring = true;
+        SoundManager.Instance.PlaySFX("shoot_portal");
         Right();
         yield return new WaitForSeconds(shotDelay);
     }
@@ -356,6 +358,7 @@ public class ShootPortal : MonoBehaviour
             {
                 if (!haveCube)
                 {
+                    SoundManager.Instance.PlaySFX("cube_pickup");
                     cube = hitObj;
                     haveCube = true;
                     Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
@@ -370,6 +373,7 @@ public class ShootPortal : MonoBehaviour
             {
                 if (!haveCube)
                 {
+                    SoundManager.Instance.PlaySFX("cube_pickup");
                     cube = hitObj;
                     haveCube = true;
                     Rigidbody cubeRidigbody = hitObj.GetComponent<Rigidbody>();
@@ -394,6 +398,7 @@ public class ShootPortal : MonoBehaviour
     IEnumerator FireCubeCoroutine() {
 
         yield return new WaitForSeconds(0.05f);
+        SoundManager.Instance.PlaySFX("cube_throw");
 
         Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
         cubeRidigbody.useGravity = true;
@@ -410,6 +415,8 @@ private void ReleaseCube()
     {
         if (haveCube)
         {
+            SoundManager.Instance.PlaySFX("cube_release");
+
             Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
             cubeRidigbody.useGravity = true;
             cube.transform.SetParent(null);

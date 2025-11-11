@@ -12,10 +12,13 @@ public class ButtonController : MonoBehaviour
     {        
         if (other.CompareTag("Cube"))
         {
+            SoundManager.Instance.PlaySFX("button_press");
+
             pressableButton.transform.position -= new Vector3(0, 0.1f, 0);
 
             // open door or something else
             doorAnimator.SetBool("DoorTriggered", true);
+            SoundManager.Instance.PlaySFX("door_open");
         }
 
     }
@@ -29,6 +32,7 @@ public class ButtonController : MonoBehaviour
 
             // open door or something else
             doorAnimator.SetBool("DoorTriggered", false);
+            SoundManager.Instance.PlaySFX("door_close");
         }
     }
 

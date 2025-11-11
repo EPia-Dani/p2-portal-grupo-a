@@ -27,7 +27,7 @@ public class HealthController : MonoBehaviour
     {
         currentHealth -= amount;
 
-        //SoundManager.Instance.PlaySFX("player_hurt");
+        SoundManager.Instance.PlaySFX("player_hurt");
 
         currentHealth = Mathf.Max(currentHealth, 0);
 
@@ -36,11 +36,10 @@ public class HealthController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Player died!");
-            //SoundManager.Instance.PlaySFX("player_die");
+            SoundManager.Instance.PlaySFX("player_die");
             OnPlayerDied?.Invoke();
         }
     }
-
 
 
 }

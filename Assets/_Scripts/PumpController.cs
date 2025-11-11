@@ -27,6 +27,8 @@ public class PumpController : MonoBehaviour
     }
     IEnumerator PressButton()
     {
+        SoundManager.Instance.PlaySFX("button_press");
+
         canPress = false;
         pressableButton.transform.position -= new Vector3(0, 0.1f, 0);
         yield return new WaitForSeconds(0.5f);

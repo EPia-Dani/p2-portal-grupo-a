@@ -134,6 +134,7 @@ public class FPSController : MonoBehaviour
         {
             _mVerticalSpeed = jumpSpeed;
             isGrounded = false;
+            SoundManager.Instance.PlaySFX("jump");
         }
     }
 

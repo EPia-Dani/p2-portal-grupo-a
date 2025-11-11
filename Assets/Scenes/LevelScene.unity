@@ -6129,6 +6129,69 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 854233298}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &684913963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 684913965}
+  - component: {fileID: 684913964}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &684913964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684913963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0621ece75c3da0498a5383603576a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  ambientClip: {fileID: 0}
+  shootPortalClip: {fileID: 8300000, guid: 3686dab0eb4221e419e99638604531a1, type: 3}
+  playerHurtClip: {fileID: 8300000, guid: 176c53bc219e6c24b87387c23a66e27c, type: 3}
+  enemyHurtClip: {fileID: 8300000, guid: bda496d763fe7274299965ca2f763085, type: 3}
+  playerDieClip: {fileID: 8300000, guid: 47f3d352009e1af4bbe9a5fa5156d84a, type: 3}
+  playerDieLavaClip: {fileID: 8300000, guid: 18d85064f99306946a142aea853b3748, type: 3}
+  enemyDieClip: {fileID: 8300000, guid: 6e323de47903b474ab6b5da823ec8901, type: 3}
+  pickupCubeClip: {fileID: 8300000, guid: 2257c33f0df88194f9eab43b0702bba5, type: 3}
+  throwCubeClip: {fileID: 8300000, guid: 54fd76b8b34790543becaf085e9c0506, type: 3}
+  releaseCubeClip: {fileID: 8300000, guid: a85f478b688279b40940972ffcd301b9, type: 3}
+  doorOpenClip: {fileID: 8300000, guid: 8ca7bce3a85c03349a75e6e4f93ddf22, type: 3}
+  doorCloseClip: {fileID: 8300000, guid: 77bbd0a630d8f454d88e76a43306f19a, type: 3}
+  buttonPressClip: {fileID: 8300000, guid: fb5e16b50a358b940b9db48b5bf2e9a1, type: 3}
+  mechanismActivateClip: {fileID: 8300000, guid: 6d90144b58f115e47b315818476db154,
+    type: 3}
+  mechanismDeactivateClip: {fileID: 8300000, guid: 7f299f45f9610904bab0191333aa8d7d,
+    type: 3}
+--- !u!4 &684913965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684913963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.58937, y: 6.95991, z: 1.8896626}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &686087113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20384,6 +20447,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1999617743}
+  - {fileID: 684913965}
   - {fileID: 818633440}
   - {fileID: 348092828}
   - {fileID: 941683381}
