@@ -10,8 +10,7 @@ public class HealthController : MonoBehaviour
     public static event Action<int> OnHealthChanged;
 
     //Evento para comunicarse con DeathController
-    //TODO: DEATH CONTROLLER
-    public static event Action OnPlayerDied;
+    public DeathController deathController;
 
     public void RecoverHealth(int amount)
     {
@@ -37,7 +36,7 @@ public class HealthController : MonoBehaviour
         {
             Debug.Log("Player died!");
             SoundManager.Instance.PlaySFX("player_die");
-            OnPlayerDied?.Invoke();
+            deathController.PlayerDead();
         }
     }
 
