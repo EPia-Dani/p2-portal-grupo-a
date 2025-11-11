@@ -73,12 +73,21 @@ public class Portal : MonoBehaviour
         else if (other.tag == "Cube")
         {
             Debug.Log("found a cube!");
-
-            Vector3 localPosition = reflectionTransform.InverseTransformPoint(other.gameObject.transform.position);
+            Transform t = other.gameObject.transform;
+            Vector3 localPosition = reflectionTransform.InverseTransformPoint(t.position);
             localPosition.x = -localPosition.x;
             Vector3 worldPosition = mirrorPortal.transform.TransformPoint(localPosition) + mirrorPortal.transform.forward * 0.1f;
             other.gameObject.transform.position = worldPosition;
 
+            if (mirrorPortal.transform.localScale.x != 1)
+            {
+                Vector3 newScale = other.gameObject.transform.localScale * mirrorPortal.transform.localScale.x;
+                other.gameObject.transform.localScale = Vector3.one * Mathf.Clamp(newScale.x, 0.5f, 1.5f);
+            }
+            else other.transform.localScale = Vector3.one;
+
+            
+            //other.gameObject.transform.localScale += t.localScale * mirrorPortal.transform.localScale.x;
 
             Rigidbody cubeRigid = other.gameObject.GetComponent<Rigidbody>();
 
