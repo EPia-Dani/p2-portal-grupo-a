@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathController : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class DeathController : MonoBehaviour
     public void PlayerDead()
     {
         gameoverHUD.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
 
         if (playerController != null)
             playerController.enabled = false;
@@ -31,6 +34,7 @@ public class DeathController : MonoBehaviour
     public void playerRevive()
     {
         gameoverHUD.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (playerController != null)
             playerController.enabled = true;
@@ -43,6 +47,6 @@ public class DeathController : MonoBehaviour
 
     public void ExitGame()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MenuScene");
     }
 }
