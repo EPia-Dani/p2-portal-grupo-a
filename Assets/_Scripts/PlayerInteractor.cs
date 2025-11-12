@@ -24,8 +24,11 @@ public class PlayerInteractor : MonoBehaviour
             if (pump != null)
             {
                 playerHUD.ShowInteractionText("Press E to drop box");
-                if (instBox) 
+                if (instBox)
+                {
                     pump.InstanceBox();
+                    SoundManager.Instance.PlaySFX("cube_spawn");
+                }    
                 return;
             }
         }

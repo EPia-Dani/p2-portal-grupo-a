@@ -12,25 +12,45 @@ public class SoundManager : MonoBehaviour
     [Header("Ambience")]
     public AudioClip ambientClip;
 
-    [Header("Audio Clips")]
-   
-    public AudioClip shootPortalClip;
+    [Header("Audio Clips:")]
+    [Header("-------------")]
+
+    [Space(5)]
+    [Header("Portal Gun Sounds")]
+    public AudioClip shootBluePortalClip;
+    public AudioClip shootOrangePortalClip;
+    public AudioClip portalBlueOpen;
+    public AudioClip portalOrangeOpen;
+    public AudioClip portalInvalidSurface;
+
+    [Header("Player Sounds")]
     public AudioClip playerHurtClip;
     public AudioClip playerDieClip;
     public AudioClip playerDieLavaClip;
+
+    [Header("Cube Sounds")]
     public AudioClip pickupCubeClip;
     public AudioClip throwCubeClip;
-    public AudioClip releaseCubeClip;
+    public AudioClip cubeSpawn;
+    public AudioClip cubeHoldLoop;
+
+    [Header("Door Sounds")]
     public AudioClip doorOpenClip;
     public AudioClip doorCloseClip;
+
+    [Header("Map Sounds")]
     public AudioClip buttonPressClip;
     public AudioClip mechanismActivateClip;
     public AudioClip mechanismDeactivateClip;
 
-    private Dictionary<string, AudioClip> soundDictionary;
-    private string currentExclusiveSound = null; //para poder reproducir solo un sonido a la vez si queremos
+    [Header("Turret Sounds")]
+    public AudioClip turretLaserStart;
+    public AudioClip turretLaserLoop;
+    public AudioClip turretDie;
 
-    //TODO: Falta añadir SFX del laser de torreta y reemplazar todos los sonidos (ahora mismo todos son placeholders)
+    private Dictionary<string, AudioClip> soundDictionary;
+    private string currentExclusiveSound = null;
+
     private void Awake()
     {
         // Lo hacemos singleton (solo un sound manager en escena)
@@ -42,20 +62,39 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Inicializamos diccionario para acceso rápido
         soundDictionary = new Dictionary<string, AudioClip>()
         {
+            // Portal Gun Sounds
+            {"shoot_blue_portal", shootBluePortalClip},
+            {"shoot_orange_portal", shootOrangePortalClip},
+            {"portal_blue_open", portalBlueOpen},
+            {"portal_orange_open", portalOrangeOpen},
+            {"portal_invalid_surface", portalInvalidSurface},
+
+            // Player Sounds
             {"player_hurt", playerHurtClip},
             {"player_die", playerDieClip},
             {"player_die_lava", playerDieLavaClip},
+
+            // Cube Sounds
             {"cube_pickup", pickupCubeClip},
             {"cube_throw", throwCubeClip},
-            {"cube_release", releaseCubeClip},
+            {"cube_spawn", cubeSpawn},
+            {"cube_holding_loop", cubeHoldLoop},
+
+            // Door Sounds
             {"door_open", doorOpenClip},
             {"door_close", doorCloseClip},
+
+            // Map Sounds
             {"button_press", buttonPressClip},
             {"mechanism_activate", mechanismActivateClip},
-            {"mechanism_deactivate", mechanismDeactivateClip}
+            {"mechanism_deactivate", mechanismDeactivateClip},
+
+            // Turret Sounds
+            {"turret_laser_start", turretLaserStart},
+            {"turret_laser_loop", turretLaserLoop},
+            {"turret_die", turretDie}
         };
     }
 
@@ -85,6 +124,24 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning($"SoundManager: No se ha encontrado el sonido '{soundName}'");
         }
     }
+
+    public void PlayLoop(string soundName)
+    {
+        if (soundDictionary.ContainsKey(soundName))
+        {
+            sfxSource.clip = soundDictionary[soundName];
+            sfxSource.loop = true;
+            sfxSource.Play();
+        }
+    }
+
+    public void StopLoop()
+    {
+        sfxSource.Stop();
+        sfxSource.loop = false;
+        sfxSource.clip = null;
+    }
+
 
     private System.Collections.IEnumerator ClearExclusiveAfterClip(float delay)
     {

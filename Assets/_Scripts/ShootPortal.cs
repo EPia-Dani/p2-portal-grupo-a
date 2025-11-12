@@ -150,14 +150,12 @@ public class ShootPortal : MonoBehaviour
     private IEnumerator FireCoroutine()
     {
         isFiring = true;
-        SoundManager.Instance.PlaySFX("shoot_portal");
         Fire();
         yield return new WaitForSeconds(shotDelay);
     }
     private IEnumerator RightCoroutine()
     {
         isFiring = true;
-        SoundManager.Instance.PlaySFX("shoot_portal");
         Right();
         yield return new WaitForSeconds(shotDelay);
     }
@@ -185,7 +183,7 @@ public class ShootPortal : MonoBehaviour
                     {
                         Destroy(bluePortalGameObject);
                     }
-
+                    SoundManager.Instance.PlaySFX("shoot_blue_portal");
                     bluePortalGameObject = Instantiate(bluePortalPrefab, hitPoint, rotacion);
                     float newScale = Mathf.Clamp(bluePortalScaleValue, 0.5f, 1.5f);
                     bluePortalGameObject.transform.localScale = Vector3.one * newScale;
@@ -199,8 +197,9 @@ public class ShootPortal : MonoBehaviour
                         orangePortal.mirrorPortal = bluePortal;
                     }
                 }
+                else { SoundManager.Instance.PlaySFX("portal_invalid_surface"); }
 
-                UpdatePortalMaterial();
+                    UpdatePortalMaterial();
                 UpdatePortalCrosshair();
             }
         }
@@ -230,7 +229,7 @@ public class ShootPortal : MonoBehaviour
                     {
                         Destroy(orangePortalGameObject);
                     }
-
+                    SoundManager.Instance.PlaySFX("shoot_orange_portal");
                     orangePortalGameObject = Instantiate(orangePortalPrefab, hitPoint, rotacion);
                     float newScale = Mathf.Clamp(orangePortalScaleValue, 0.5f, 1.5f);
                     orangePortalGameObject.transform.localScale = Vector3.one * newScale;
@@ -244,8 +243,12 @@ public class ShootPortal : MonoBehaviour
                         bluePortal.mirrorPortal = orangePortal;
                     }
                 }
+                else
+                {
+                    SoundManager.Instance.PlaySFX("portal_invalid_surface");
+                }
 
-                UpdatePortalMaterial();
+                    UpdatePortalMaterial();
                 UpdatePortalCrosshair();
             }
         }
@@ -259,18 +262,22 @@ public class ShootPortal : MonoBehaviour
 
         if (orangePortalGameObject != null)
         {
+            SoundManager.Instance.PlaySFX("shoot_orange_portal");
             MeshRenderer rend = orangePortalGameObject.GetComponentInChildren<MeshRenderer>();
             Material[] materials = rend.materials;
             materials[0] = doublePortal ? orangePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
+            if (bluePortalGameObject != null) SoundManager.Instance.PlaySFX("portal_orange_open");
         }
         
         if (bluePortalGameObject != null)
         {
+            SoundManager.Instance.PlaySFX("shoot_blue_portal");
             MeshRenderer rend = bluePortalGameObject.GetComponentInChildren<MeshRenderer>();
             Material[] materials = rend.materials;
             materials[0] = doublePortal ? bluePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
+            if (orangePortalGameObject != null) SoundManager.Instance.PlaySFX("blue_portal_open");
         }
     }
 
@@ -415,8 +422,6 @@ private void ReleaseCube()
     {
         if (haveCube)
         {
-            SoundManager.Instance.PlaySFX("cube_release");
-
             Rigidbody cubeRidigbody = cube.GetComponent<Rigidbody>();
             cubeRidigbody.useGravity = true;
             cube.transform.SetParent(null);

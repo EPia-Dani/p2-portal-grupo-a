@@ -6479,20 +6479,30 @@ MonoBehaviour:
   sfxSource: {fileID: 841094300}
   musicSource: {fileID: 780748768}
   ambientClip: {fileID: 0}
-  shootPortalClip: {fileID: 8300000, guid: 3686dab0eb4221e419e99638604531a1, type: 3}
+  shootBluePortalClip: {fileID: 8300000, guid: a2fa988814644bf4cb15efe75a2a169e, type: 3}
+  shootOrangePortalClip: {fileID: 8300000, guid: e22ae95bd7620994fae0e343f4102c9f,
+    type: 3}
+  portalBlueOpen: {fileID: 8300000, guid: 5a473b6d56c2b234aa3b926464322bc7, type: 3}
+  portalOrangeOpen: {fileID: 8300000, guid: cfc03c717eea07a4d8558a2b744796a2, type: 3}
+  portalInvalidSurface: {fileID: 8300000, guid: 941f31931389d294a82f9cd493b4fb35,
+    type: 3}
   playerHurtClip: {fileID: 8300000, guid: 176c53bc219e6c24b87387c23a66e27c, type: 3}
   playerDieClip: {fileID: 8300000, guid: 47f3d352009e1af4bbe9a5fa5156d84a, type: 3}
   playerDieLavaClip: {fileID: 8300000, guid: 18d85064f99306946a142aea853b3748, type: 3}
   pickupCubeClip: {fileID: 8300000, guid: 2257c33f0df88194f9eab43b0702bba5, type: 3}
   throwCubeClip: {fileID: 8300000, guid: 54fd76b8b34790543becaf085e9c0506, type: 3}
-  releaseCubeClip: {fileID: 8300000, guid: a85f478b688279b40940972ffcd301b9, type: 3}
+  cubeSpawn: {fileID: 8300000, guid: 3d131926caa559a4a8235aefc51b10f3, type: 3}
+  cubeHoldLoop: {fileID: 8300000, guid: 8b964e1784b71384d8466e9a4e306074, type: 3}
   doorOpenClip: {fileID: 8300000, guid: 8ca7bce3a85c03349a75e6e4f93ddf22, type: 3}
   doorCloseClip: {fileID: 8300000, guid: 77bbd0a630d8f454d88e76a43306f19a, type: 3}
   buttonPressClip: {fileID: 8300000, guid: fb5e16b50a358b940b9db48b5bf2e9a1, type: 3}
-  mechanismActivateClip: {fileID: 8300000, guid: 6d90144b58f115e47b315818476db154,
+  mechanismActivateClip: {fileID: 8300000, guid: 1d0ccdee9e066a04f994db6fdfd4703e,
     type: 3}
   mechanismDeactivateClip: {fileID: 8300000, guid: 7f299f45f9610904bab0191333aa8d7d,
     type: 3}
+  turretLaserStart: {fileID: 0}
+  turretLaserLoop: {fileID: 8300000, guid: 4e8f6781b02ef43478c5ff8e82fd032a, type: 3}
+  turretDie: {fileID: 8300000, guid: b2cb8595a12433b488c9ee3175217d61, type: 3}
 --- !u!4 &684913965
 Transform:
   m_ObjectHideFlags: 0
@@ -8637,68 +8647,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 940527609}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &827020848
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1142716642891444, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_Name
-      value: WallColumn (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -15.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 11.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297822754980008, guid: 76e71251832a680428509957b1c2d590, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23976539511910828, guid: 76e71251832a680428509957b1c2d590,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: a1d21023d64d8a041beaba48c86efa2f, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 76e71251832a680428509957b1c2d590, type: 3}
 --- !u!1001 &832498476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8971,7 +8919,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.634
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -21653,5 +21601,4 @@ SceneRoots:
   - {fileID: 1559372359}
   - {fileID: 481346701}
   - {fileID: 1414457378}
-  - {fileID: 827020848}
   - {fileID: 1075426596}

@@ -12,6 +12,8 @@ public class TurretLaser : MonoBehaviour
         lineRenderer.startWidth = 5f;
         lineRenderer.endWidth = 5f;
         lineRenderer.useWorldSpace = true;
+        SoundManager.Instance.PlaySFX("turret_laser_start");
+        SoundManager.Instance.PlaySFX("turret_laser_loop");
     }
 
     private void Update()
@@ -38,6 +40,7 @@ public class TurretLaser : MonoBehaviour
             else if (hitObj.tag == "Turret")
             {
                 TurretLaser turretLaser = hitObj.GetComponent<TurretLaser>();
+                SoundManager.Instance.PlaySFX("turret_die");
                 turretLaser.TurretDeactivate();
             }
         }
@@ -63,6 +66,7 @@ public class TurretLaser : MonoBehaviour
     {
         if (other.tag == "Cube" || other.tag == "Turret")
         {
+            SoundManager.Instance.PlaySFX("turret_die");
             TurretDeactivate();
         }
     }
