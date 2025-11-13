@@ -34,7 +34,8 @@ public class TurretLaser : MonoBehaviour
             GameObject hitObj = hit.collider.gameObject;
             if (hitObj.tag == "Player")
             {
-                DeathController deathController = hitObj.GetComponent<DeathController>();
+                DeathController deathController = GameObject.Find("PlayerDeadManager").GetComponent<DeathController>();
+                deathController.PlayerDead();
             }
             else if (hitObj.tag == "Turret")
             {

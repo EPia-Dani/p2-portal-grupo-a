@@ -6,6 +6,7 @@ public class DeathController : MonoBehaviour
 {
     public GameObject gameoverHUD;
     public GameObject player;
+    public Checkpoint checkpoint;
     private FPSController playerController;
     private ShootPortal shootPortal;
     private Vector3 playerPos;
@@ -31,7 +32,7 @@ public class DeathController : MonoBehaviour
             shootPortal.enabled = false;
     }
 
-    public void playerRevive()
+    public void RespawnStartPosition()
     {
         gameoverHUD.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -41,8 +42,22 @@ public class DeathController : MonoBehaviour
         if (shootPortal != null)
             shootPortal.enabled = true;
 
-        player.transform.rotation = playerRot;
-        player.transform.position = playerPos;
+        player.transform.position = checkpoint.GetStartPosition();
+        /*player.transform.rotation = playerRot;
+        player.transform.position = playerPos;*/
+    }
+
+    public void RespawnCheckpointPosition()
+    {
+        gameoverHUD.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+
+        if (playerController != null)
+            playerController.enabled = true;
+        if (shootPortal != null)
+            shootPortal.enabled = true;
+
+        player.transform.position = checkpoint.GetCheckpointPosition();
     }
 
     public void ExitGame()
