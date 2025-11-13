@@ -72,7 +72,6 @@ public class Portal : MonoBehaviour
         }
         else if (other.tag == "Cube")
         {
-            Debug.Log("found a cube!");
             Transform t = other.gameObject.transform;
             Vector3 localPosition = reflectionTransform.InverseTransformPoint(t.position);
             localPosition.x = -localPosition.x;
@@ -93,18 +92,22 @@ public class Portal : MonoBehaviour
 
             // esto ajusta la rotación y posición del cubo sobre sí mismo, pero no la dirección en la que se mueve.
             // No sé ni si esto es necesario teniendo en cuenta que las 6 caras son idénticas.
-                Vector3 moveDirection = playerCamera.transform.forward;
-                Vector3 localDirection = reflectionTransform.InverseTransformDirection(moveDirection);
+            Vector3 moveDirection = playerCamera.transform.forward;
+            Vector3 localDirection = reflectionTransform.InverseTransformDirection(moveDirection);
 
-                localDirection = new Vector3(-localDirection.x, localDirection.y, -localDirection.z);
-                Vector3 newDirection = mirrorPortal.transform.TransformDirection(localDirection);
+            localDirection = new Vector3(-localDirection.x, localDirection.y, -localDirection.z);
+            Vector3 newDirection = mirrorPortal.transform.TransformDirection(localDirection);
 
-                Quaternion newRotation = Quaternion.LookRotation(newDirection, mirrorPortal.transform.up);
+            Quaternion newRotation = Quaternion.LookRotation(newDirection, mirrorPortal.transform.up);
 
-                cubeRigid.linearVelocity = newDirection * cubeRigid.linearVelocity.magnitude;
-                other.gameObject.transform.rotation = newRotation;
+            cubeRigid.linearVelocity = newDirection * cubeRigid.linearVelocity.magnitude;
+            other.gameObject.transform.rotation = newRotation;
 
-            
+            // Liberar el cubo del jugador después de pasar por el portal
+            GameObject player = GameObject.Find("Player");
+            ShootPortal portal = player.GetComponent<ShootPortal>();
+            portal.ReleaseCube();
+
             //todo: calcular dirección en la que se mueve el cubo, para cambiársela cuando se teletransporta.
 
             StartCoroutine(DisablePortalTemporaly());

@@ -5,9 +5,7 @@ public class Checkpoint : MonoBehaviour
     public GameObject player;
     public PlayerHUD playerHUD;
     private Vector3 startPosition;
-    private Quaternion startRotation;
     private Vector3 checkpointPosition = Vector3.zero;
-    private Quaternion checkpointRotation;
 
     void Start()
     {

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,20 +10,20 @@ public class DeathController : MonoBehaviour
     public Checkpoint checkpoint;
     private FPSController playerController;
     private ShootPortal shootPortal;
-    private Vector3 playerPos;
-    private Quaternion playerRot;
+    private bool isDead = false;
 
     private void Start()
     {
         gameoverHUD.SetActive(false);
-        playerRot = player.transform.rotation;
-        playerPos = player.transform.position;
         playerController = player.GetComponent<FPSController>();
         shootPortal = playerController.GetComponent<ShootPortal>();
     }
 
     public void PlayerDead()
     {
+        if (isDead) return;
+
+        isDead = true;
         gameoverHUD.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
 
@@ -34,6 +35,7 @@ public class DeathController : MonoBehaviour
 
     public void RespawnStartPosition()
     {
+        player.transform.position = checkpoint.GetStartPosition();
         gameoverHUD.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -42,13 +44,12 @@ public class DeathController : MonoBehaviour
         if (shootPortal != null)
             shootPortal.enabled = true;
 
-        player.transform.position = checkpoint.GetStartPosition();
-        /*player.transform.rotation = playerRot;
-        player.transform.position = playerPos;*/
+        StartCoroutine(InmunePeriode());
     }
 
     public void RespawnCheckpointPosition()
     {
+        player.transform.position = checkpoint.GetCheckpointPosition();
         gameoverHUD.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -57,11 +58,17 @@ public class DeathController : MonoBehaviour
         if (shootPortal != null)
             shootPortal.enabled = true;
 
-        player.transform.position = checkpoint.GetCheckpointPosition();
+        StartCoroutine(InmunePeriode());
     }
 
     public void ExitGame()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    IEnumerator InmunePeriode()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isDead = false;
     }
 }

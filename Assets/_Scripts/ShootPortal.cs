@@ -351,7 +351,7 @@ public class ShootPortal : MonoBehaviour
         return illegalPos;
     }
 
-    private void CatchCube()
+    public void CatchCube()
     {
         Vector3 shootDirection = new Vector3(0.5f, 0.5f, 0f);
         
@@ -394,7 +394,7 @@ public class ShootPortal : MonoBehaviour
         }
     }
 
-    private void FireCube()
+    public void FireCube()
     {
         if (haveCube)
         {
@@ -418,7 +418,7 @@ public class ShootPortal : MonoBehaviour
         cube = null;
     }
 
-private void ReleaseCube()
+    public void ReleaseCube()
     {
         if (haveCube)
         {
