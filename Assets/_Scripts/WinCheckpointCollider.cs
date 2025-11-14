@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class WinCheckpointCollider : MonoBehaviour
 {
-    private Win win;
+    private WinController winController;
     private bool isReached = false;
 
     private void Start()
     {
-        win = GameObject.Find("WinManager").GetComponent<Win>();
+        winController = GameObject.Find("WinManager").GetComponent<WinController>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +16,7 @@ public class WinCheckpointCollider : MonoBehaviour
             SoundManager.Instance.PlaySFX("confeti");
             SoundManager.Instance.PlaySFX("oiia");
             isReached = true;
-            win.playerWin();
+            winController.playerWin();
         }
     }
 }

@@ -10,6 +10,7 @@ public class DeathController : MonoBehaviour
     private CharacterController characterController;
     private FPSController fpsController;
     private ShootPortal shootPortal;
+    private PauseController pauseController;
     private bool isDead = false;
 
     private void Start()
@@ -18,6 +19,7 @@ public class DeathController : MonoBehaviour
         fpsController = player.GetComponent<FPSController>();
         shootPortal = fpsController.GetComponent<ShootPortal>();
         characterController = player.GetComponent<CharacterController>();
+        pauseController = GameObject.Find("PauseManager").GetComponent<PauseController>();
     }
 
     public void PlayerDead()
@@ -62,6 +64,9 @@ public class DeathController : MonoBehaviour
 
     public void ExitGame()
     {
+        pauseController.Resume();
+        Cursor.lockState = CursorLockMode.None;
+        SoundManager.Instance.StopLoop();
         SceneManager.LoadScene("MenuScene");
     }
 

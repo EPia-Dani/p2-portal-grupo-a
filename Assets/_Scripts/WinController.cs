@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Win : MonoBehaviour
+public class WinController : MonoBehaviour
 {
     public GameObject meme;
     public GameObject meme2;

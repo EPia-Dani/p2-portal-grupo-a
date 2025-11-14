@@ -147,6 +147,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PauseLoop()
+    {
+        sfxSource.Pause();
+    }
+
+    public void ResumeLoop()
+    {
+        sfxSource.UnPause();
+    }
+
     public void StopLoop()
     {
         sfxSource.Stop();

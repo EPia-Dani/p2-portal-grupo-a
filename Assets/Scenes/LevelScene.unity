@@ -3868,8 +3868,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 390228087}
-        m_TargetAssemblyTypeName: DeathController, Assembly-CSharp
+      - m_Target: {fileID: 1673227795}
+        m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -14559,9 +14559,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 818633442}
-        m_TargetAssemblyTypeName: PlayerInteractor, Assembly-CSharp
-        m_MethodName: Pause
+      - m_Target: {fileID: 1673227795}
+        m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19123,8 +19123,8 @@ MonoBehaviour:
     m_ActionName: 'Player/Scroll[/Mouse/scroll]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 818633442}
-        m_TargetAssemblyTypeName: PlayerInteractor, Assembly-CSharp
+      - m_Target: {fileID: 1673227795}
+        m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
         m_MethodName: OnEsc
         m_Mode: 0
         m_Arguments:
@@ -19326,7 +19326,6 @@ MonoBehaviour:
   playerCamera: {fileID: 330585545}
   interactDistance: 3
   playerHUD: {fileID: 731886860}
-  pauseHUD: {fileID: 20710570}
 --- !u!114 &818633443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32118,6 +32117,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1673227794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1673227796}
+  - component: {fileID: 1673227795}
+  m_Layer: 0
+  m_Name: PauseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1673227795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673227794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6a472cfc66a544e82c1dd64e48b54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseHUD: {fileID: 20710570}
+--- !u!4 &1673227796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673227794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1018.296, y: 905.45276, z: -1235.4904}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1685466347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40257,6 +40301,7 @@ SceneRoots:
   - {fileID: 390228088}
   - {fileID: 1672724411}
   - {fileID: 1147900716}
+  - {fileID: 1673227796}
   - {fileID: 871311986}
   - {fileID: 20710574}
   - {fileID: 348092828}
