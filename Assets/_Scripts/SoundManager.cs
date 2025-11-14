@@ -22,11 +22,12 @@ public class SoundManager : MonoBehaviour
     public AudioClip portalBlueOpen;
     public AudioClip portalOrangeOpen;
     public AudioClip portalInvalidSurface;
+    public AudioClip portalCross;
 
     [Header("Player Sounds")]
     public AudioClip playerHurtClip;
     public AudioClip playerDieClip;
-    public AudioClip playerDieLavaClip;
+    public AudioClip playerDrownClip;
 
     [Header("Cube Sounds")]
     public AudioClip pickupCubeClip;
@@ -42,6 +43,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip buttonPressClip;
     public AudioClip mechanismActivateClip;
     public AudioClip mechanismDeactivateClip;
+    public AudioClip checkpoint;
 
     [Header("Turret Sounds")]
     public AudioClip turretLaserStart;
@@ -70,11 +72,12 @@ public class SoundManager : MonoBehaviour
             {"portal_blue_open", portalBlueOpen},
             {"portal_orange_open", portalOrangeOpen},
             {"portal_invalid_surface", portalInvalidSurface},
+            {"portal_cross", portalCross},
 
             // Player Sounds
             {"player_hurt", playerHurtClip},
             {"player_die", playerDieClip},
-            {"player_die_lava", playerDieLavaClip},
+            {"player_drown", playerDrownClip},
 
             // Cube Sounds
             {"cube_pickup", pickupCubeClip},
@@ -90,6 +93,7 @@ public class SoundManager : MonoBehaviour
             {"button_press", buttonPressClip},
             {"mechanism_activate", mechanismActivateClip},
             {"mechanism_deactivate", mechanismDeactivateClip},
+            {"checkpoint", checkpoint},
 
             // Turret Sounds
             {"turret_laser_start", turretLaserStart},

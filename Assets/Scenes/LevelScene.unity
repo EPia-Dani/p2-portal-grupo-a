@@ -11461,13 +11461,14 @@ MonoBehaviour:
   shootBluePortalClip: {fileID: 8300000, guid: a2fa988814644bf4cb15efe75a2a169e, type: 3}
   shootOrangePortalClip: {fileID: 8300000, guid: e22ae95bd7620994fae0e343f4102c9f,
     type: 3}
-  portalBlueOpen: {fileID: 8300000, guid: 5a473b6d56c2b234aa3b926464322bc7, type: 3}
-  portalOrangeOpen: {fileID: 8300000, guid: cfc03c717eea07a4d8558a2b744796a2, type: 3}
+  portalBlueOpen: {fileID: 8300000, guid: cfc03c717eea07a4d8558a2b744796a2, type: 3}
+  portalOrangeOpen: {fileID: 8300000, guid: 5a473b6d56c2b234aa3b926464322bc7, type: 3}
   portalInvalidSurface: {fileID: 8300000, guid: 941f31931389d294a82f9cd493b4fb35,
     type: 3}
+  portalCross: {fileID: 8300000, guid: e0eb0ccfecccd484dad14caa596fccfb, type: 3}
   playerHurtClip: {fileID: 8300000, guid: 176c53bc219e6c24b87387c23a66e27c, type: 3}
   playerDieClip: {fileID: 8300000, guid: 47f3d352009e1af4bbe9a5fa5156d84a, type: 3}
-  playerDieLavaClip: {fileID: 8300000, guid: 18d85064f99306946a142aea853b3748, type: 3}
+  playerDrownClip: {fileID: 8300000, guid: 96a731ecded216a4dbab08400cf0a84f, type: 3}
   pickupCubeClip: {fileID: 8300000, guid: 2257c33f0df88194f9eab43b0702bba5, type: 3}
   throwCubeClip: {fileID: 8300000, guid: 54fd76b8b34790543becaf085e9c0506, type: 3}
   cubeSpawn: {fileID: 8300000, guid: 3d131926caa559a4a8235aefc51b10f3, type: 3}
@@ -11479,8 +11480,9 @@ MonoBehaviour:
     type: 3}
   mechanismDeactivateClip: {fileID: 8300000, guid: 7f299f45f9610904bab0191333aa8d7d,
     type: 3}
-  turretLaserStart: {fileID: 0}
-  turretLaserLoop: {fileID: 8300000, guid: 4e8f6781b02ef43478c5ff8e82fd032a, type: 3}
+  checkpoint: {fileID: 8300000, guid: 15ca9254121e53a439c35b073aac62e8, type: 3}
+  turretLaserStart: {fileID: 8300000, guid: 74b6ff1e3ec615748aafbb511d2a14c3, type: 3}
+  turretLaserLoop: {fileID: 8300000, guid: 68029f4c73f7c764f989a72b99e03dd1, type: 3}
   turretDie: {fileID: 8300000, guid: b2cb8595a12433b488c9ee3175217d61, type: 3}
 --- !u!4 &684913965
 Transform:

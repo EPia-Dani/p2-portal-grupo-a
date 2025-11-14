@@ -36,6 +36,7 @@ public class Portal : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            SoundManager.Instance.PlaySFX("portal_cross");
             GameObject player = GameObject.Find("Player");
             CharacterController characterController = player.GetComponent<CharacterController>();
             FPSController fpsController = player.GetComponent<FPSController>();
@@ -72,6 +73,7 @@ public class Portal : MonoBehaviour
         }
         else if (other.tag == "Cube")
         {
+            SoundManager.Instance.PlaySFX("portal_cross");
             Transform t = other.gameObject.transform;
             Vector3 localPosition = reflectionTransform.InverseTransformPoint(t.position);
             localPosition.x = -localPosition.x;

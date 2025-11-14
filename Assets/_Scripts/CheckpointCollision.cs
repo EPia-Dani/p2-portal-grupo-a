@@ -14,6 +14,7 @@ public class CheckpointCollision : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isReached)
         {
+            SoundManager.Instance.PlaySFX("checkpoint");
             isReached = true;
             checkpoint.SetCheckpoint(transform.position);
         }

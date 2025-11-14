@@ -277,7 +277,7 @@ public class ShootPortal : MonoBehaviour
             Material[] materials = rend.materials;
             materials[0] = doublePortal ? bluePortalMaterial : singlePortalMaterial;
             rend.materials = materials;
-            if (orangePortalGameObject != null) SoundManager.Instance.PlaySFX("blue_portal_open");
+            if (orangePortalGameObject != null) SoundManager.Instance.PlaySFX("portal_blue_open");
         }
     }
 

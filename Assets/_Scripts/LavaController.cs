@@ -11,7 +11,7 @@ public class LavaController : MonoBehaviour
         if (collider.CompareTag("Player"))
         {
             health = collider.GetComponent<HealthController>();
-            SoundManager.Instance.PlayExclusiveSFX("player_die_lava");
+            SoundManager.Instance.PlayExclusiveSFX("player_drown");
             health.receiveDamage(damage);
         }
     }
