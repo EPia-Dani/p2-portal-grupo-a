@@ -31,7 +31,11 @@ public class ShootPortal : MonoBehaviour
     public GameObject orangePortalSprite;
 
     public CrosshairController crosshairController;
-    
+
+    public GameObject portalGun;
+    public Material orangeGunMaterial; 
+    public Material blueGunMaterial;
+
     private GameObject bluePortalGameObject;
     private GameObject orangePortalGameObject;
     private bool isHoldingFire = false;
@@ -183,6 +187,7 @@ public class ShootPortal : MonoBehaviour
                     {
                         Destroy(bluePortalGameObject);
                     }
+                    UpdatePortalGunMaterial(1);
                     SoundManager.Instance.PlaySFX("shoot_blue_portal");
                     bluePortalGameObject = Instantiate(bluePortalPrefab, hitPoint, rotacion);
                     float newScale = Mathf.Clamp(bluePortalScaleValue, 0.5f, 1.5f);
@@ -229,6 +234,7 @@ public class ShootPortal : MonoBehaviour
                     {
                         Destroy(orangePortalGameObject);
                     }
+                    UpdatePortalGunMaterial(2);
                     SoundManager.Instance.PlaySFX("shoot_orange_portal");
                     orangePortalGameObject = Instantiate(orangePortalPrefab, hitPoint, rotacion);
                     float newScale = Mathf.Clamp(orangePortalScaleValue, 0.5f, 1.5f);
@@ -254,6 +260,16 @@ public class ShootPortal : MonoBehaviour
         }
 
         isFiring = false;
+    }
+
+    private void UpdatePortalGunMaterial(int portal)
+    {
+        if (portalGun != null)
+        {
+            MeshRenderer rend = portalGun.GetComponentInChildren<MeshRenderer>();
+            if (portal == 1) rend.material = blueGunMaterial;
+            else if (portal == 2) rend.material = orangeGunMaterial;
+        }
     }
 
     private void UpdatePortalMaterial()
