@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [Header("-------------")]
 
     [Space(5)]
+
     [Header("Portal Gun Sounds")]
     public AudioClip shootBluePortalClip;
     public AudioClip shootOrangePortalClip;
@@ -107,6 +108,9 @@ public class SoundManager : MonoBehaviour
             // Win Sounds
             {"confeti", confeti},
             {"oiia", oiia},
+
+            // Ambience
+            {"radio_loop", ambientClip }
         };
     }
 
@@ -137,23 +141,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayLoop(string soundName)
-    {
-        if (soundDictionary.ContainsKey(soundName))
-        {
-            sfxSource.clip = soundDictionary[soundName];
-            sfxSource.loop = true;
-            sfxSource.Play();
-        }
-    }
-
     public void PauseLoop()
     {
+        musicSource.Pause();
         sfxSource.Pause();
     }
 
     public void ResumeLoop()
     {
+        musicSource.UnPause();
         sfxSource.UnPause();
     }
 

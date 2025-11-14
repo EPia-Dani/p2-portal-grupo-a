@@ -21,6 +21,7 @@ public class WinController : MonoBehaviour
 
     public void playerWin()
     {
+        SoundManager.Instance.StopMusic();
         meme.SetActive(true);
         meme2.SetActive(true);
         meme3.SetActive(true);

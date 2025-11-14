@@ -41,6 +41,8 @@ public class FPSController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         characterController = GetComponent<CharacterController>();
+
+        SoundManager.Instance.PlayAmbience();
     }
 
     // Update is called once per frame
