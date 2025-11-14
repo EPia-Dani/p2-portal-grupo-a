@@ -2595,7 +2595,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -356}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &165325382
 MonoBehaviour:
@@ -2657,14 +2657,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -16707,7 +16707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 841094300}
   musicSource: {fileID: 780748768}
-  ambientClip: {fileID: 0}
+  ambientClip: {fileID: 8300000, guid: 0dd00c9fc836f7e408b17176d2877fd9, type: 3}
   shootBluePortalClip: {fileID: 8300000, guid: a2fa988814644bf4cb15efe75a2a169e, type: 3}
   shootOrangePortalClip: {fileID: 8300000, guid: e22ae95bd7620994fae0e343f4102c9f,
     type: 3}
@@ -18210,8 +18210,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 84.4, y: 17.69, z: 78.2}
-  m_Center: {x: 0, y: 16.92, z: 0}
+  m_Size: {x: 72.54835, y: 17.69, z: 70.7981}
+  m_Center: {x: -5.9258456, y: 16.92, z: -3.7009473}
 --- !u!114 &770737046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24782,6 +24782,7 @@ MonoBehaviour:
   meme4: {fileID: 1334860845}
   meme5: {fileID: 1077494372}
   particleSystem: {fileID: 348158907}
+  playerHUD: {fileID: 165325382}
 --- !u!4 &1147900716
 Transform:
   m_ObjectHideFlags: 0

@@ -38,6 +38,8 @@ public class DeathController : MonoBehaviour
 
     public void RespawnStartPosition()
     {
+        SoundManager.Instance.StopLoop();
+        SoundManager.Instance.StopMusic();
         SceneManager.LoadScene("LevelScene");
     }
 
@@ -67,6 +69,7 @@ public class DeathController : MonoBehaviour
         pauseController.Resume();
         Cursor.lockState = CursorLockMode.None;
         SoundManager.Instance.StopLoop();
+        SoundManager.Instance.StopMusic();
         SceneManager.LoadScene("MenuScene");
     }
 

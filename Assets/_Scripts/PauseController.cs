@@ -44,6 +44,7 @@ public class PauseController : MonoBehaviour
         Resume();
         Cursor.lockState = CursorLockMode.None;
         SoundManager.Instance.StopLoop();
+        SoundManager.Instance.StopMusic();
         SceneManager.LoadScene("MenuScene");
     }
 }

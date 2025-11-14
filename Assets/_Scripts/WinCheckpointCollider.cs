@@ -13,8 +13,6 @@ public class WinCheckpointCollider : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isReached)
         {
-            SoundManager.Instance.PlaySFX("confeti");
-            SoundManager.Instance.PlaySFX("oiia");
             isReached = true;
             winController.playerWin();
         }

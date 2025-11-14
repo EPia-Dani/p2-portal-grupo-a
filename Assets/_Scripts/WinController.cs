@@ -8,6 +8,7 @@ public class WinController : MonoBehaviour
     public GameObject meme4;
     public GameObject meme5;
     public ParticleSystem particleSystem;
+    public PlayerHUD playerHUD;
 
     private void Start()
     {
@@ -22,6 +23,11 @@ public class WinController : MonoBehaviour
     public void playerWin()
     {
         SoundManager.Instance.StopMusic();
+        SoundManager.Instance.PlaySFX("confeti");
+        SoundManager.Instance.PlaySFX("oiia");
+
+        playerHUD.ShowInteractionTextWithDuration("Press ESC to exit game");
+
         meme.SetActive(true);
         meme2.SetActive(true);
         meme3.SetActive(true);
