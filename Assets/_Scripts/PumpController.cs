@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PumpController : MonoBehaviour
@@ -13,17 +14,26 @@ public class PumpController : MonoBehaviour
 
     private bool canPress = true;
 
+    private List<GameObject> spawnedBoxes = new List<GameObject>();
+
     public void InstanceBox()
     {
-        if (canPress)
+        if (!canPress) return;
+
+        StartCoroutine(PressButton());
+
+        // Si ya hay 2 cubos, eliminar el primero
+        if (spawnedBoxes.Count >= maxInstantiateNumber)
         {
-            StartCoroutine(PressButton());
-            if (currentInstantiateNumber < maxInstantiateNumber)
-            {
-                Instantiate(boxPrefab, instantiatePlace.position, Quaternion.identity);
-                currentInstantiateNumber += 1;
-            }
+            Destroy(spawnedBoxes[0]);
+            spawnedBoxes.RemoveAt(0);
         }
+
+        // Crear un nuevo cubo
+        GameObject newBox = Instantiate(boxPrefab, instantiatePlace.position, Quaternion.identity);
+
+        // Guardarlo en la lista
+        spawnedBoxes.Add(newBox);
     }
     IEnumerator PressButton()
     {
