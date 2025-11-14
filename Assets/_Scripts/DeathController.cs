@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,15 +7,17 @@ public class DeathController : MonoBehaviour
     public GameObject gameoverHUD;
     public GameObject player;
     public Checkpoint checkpoint;
-    private FPSController playerController;
+    private CharacterController characterController;
+    private FPSController fpsController;
     private ShootPortal shootPortal;
     private bool isDead = false;
 
     private void Start()
     {
         gameoverHUD.SetActive(false);
-        playerController = player.GetComponent<FPSController>();
-        shootPortal = playerController.GetComponent<ShootPortal>();
+        fpsController = player.GetComponent<FPSController>();
+        shootPortal = fpsController.GetComponent<ShootPortal>();
+        characterController = player.GetComponent<CharacterController>();
     }
 
     public void PlayerDead()
@@ -27,37 +28,35 @@ public class DeathController : MonoBehaviour
         gameoverHUD.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
 
-        if (playerController != null)
-            playerController.enabled = false;
+        if (fpsController != null)
+            fpsController.enabled = false;
         if (shootPortal != null)
             shootPortal.enabled = false;
     }
 
     public void RespawnStartPosition()
     {
-        player.transform.position = checkpoint.GetStartPosition();
-        gameoverHUD.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-
-        if (playerController != null)
-            playerController.enabled = true;
-        if (shootPortal != null)
-            shootPortal.enabled = true;
-
-        StartCoroutine(InmunePeriode());
+        SceneManager.LoadScene("LevelScene");
     }
 
     public void RespawnCheckpointPosition()
     {
+        characterController.enabled = false;
+        fpsController.enabled = false;
+
         player.transform.position = checkpoint.GetCheckpointPosition();
+        Debug.Log("GetCheckpointPosition: " + checkpoint.GetCheckpointPosition());
+
         gameoverHUD.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
 
-        if (playerController != null)
-            playerController.enabled = true;
+        if (fpsController != null)
+            fpsController.enabled = true;
         if (shootPortal != null)
             shootPortal.enabled = true;
 
+        characterController.enabled = true;
+        fpsController.enabled = true;
         StartCoroutine(InmunePeriode());
     }
 
