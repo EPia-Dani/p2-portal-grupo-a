@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,9 @@ public class PlayerInteractor : MonoBehaviour
     public Camera playerCamera;
     public float interactDistance = 5f;
     public PlayerHUD playerHUD;
+    public GameObject pauseHUD;
+
+    private bool pause = false;
 
     private void Update()
     {
@@ -42,5 +46,32 @@ public class PlayerInteractor : MonoBehaviour
         {
             HandleCast(true);
         }
+    }
+
+    public void OnEsc(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if (pause)
+        {
+            Time.timeScale = 1f;
+            pause = false;
+            pauseHUD.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            pause = true;
+            pauseHUD.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+            
     }
 }

@@ -50,6 +50,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip turretLaserLoop;
     public AudioClip turretDie;
 
+    [Header("Winning Sounds")]
+    public AudioClip confeti;
+    public AudioClip oiia;
+
     private Dictionary<string, AudioClip> soundDictionary;
     private string currentExclusiveSound = null;
 
@@ -98,7 +102,11 @@ public class SoundManager : MonoBehaviour
             // Turret Sounds
             {"turret_laser_start", turretLaserStart},
             {"turret_laser_loop", turretLaserLoop},
-            {"turret_die", turretDie}
+            {"turret_die", turretDie},
+
+            // Win Sounds
+            {"confeti", confeti},
+            {"oiia", oiia},
         };
     }
 
